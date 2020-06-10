@@ -101,5 +101,33 @@ class NumberSpiral:
                     print(' ' + '\t', end='')
             print('\n')
 
+class NumberSpiralPrinter:
 
-spiraliser = NumberSpiral()
+    def __init__(self, matrix, n):
+        self.matrix = matrix
+        self.n = n
+        self.img_size = n
+        self.img = Image.new('RGB', (self.img_size, self.img_size))
+        self.draw = ImageDraw.Draw(self.img)
+    
+    def draw_matrix(self, matrix):
+        for j, row in enumerate(matrix):
+            for i, value in enumerate(row):
+                if value != -1:
+                    # -1 signifies that we don't want to draw anything
+                    self.draw.point((i, j), 'black')
+                else:
+                    self.draw.point((i, j), 'white')
+    
+    def show_image(self):
+        self.img.show()
+
+
+n = 1223
+
+spiral_matrix_maker = NumberSpiral()
+matrix = spiral_matrix_maker.prime_spiral(n)
+
+spiraliser = NumberSpiralPrinter(matrix=matrix, n=n)
+spiraliser.draw_matrix(matrix)
+spiraliser.show_image()
