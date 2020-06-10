@@ -1,21 +1,12 @@
-import math
+from math import sqrt
 import numpy as np
-
-target = 15
-
-if target < 1:
-    print('Target needs to be a valid number!')
-    exit()
 
 class SpirtalPrinter:
 
     def __init__(self):
         self.target = self.get_target()
-        self.root = int(math.sqrt(self.target))
-        self.matrix = np.zeros((self.root, self.root))
-        self.mid_index = int(self.root / 2)
-
-        self.gen_spiral()
+        self.matrix = self.spiral(self.target)
+        self.print_spiral()
 
     def get_target(self):
         '''
@@ -33,50 +24,27 @@ class SpirtalPrinter:
             return target
 
     @staticmethod
-    def addition_seq(n):
+    def spiral(n):
         '''
-        Generates the sequence of differences between each of a complete square
+        CREDIT:
+        https://www.reddit.com/r/ProgrammerHumor/comments/h08sul/i_mean_it_does/ftmf8rp
+        Generate an n x n number spiral.
         '''
-        # Should use iterator here! Look at fibonachi example
-        return [math.floor(i / 2) for i in range(2, n + 1)]
+        
+        matrix = np.zeros(shape=(n, n), dtype=int)
+        x = (n // 2) * (1j + 1)
+        real = 1
+        imaginary = 1j
 
-    def gen_spiral(self):
-        '''
-        Manipulates the matrix so that the number spiral is generated.
-        '''
-    
+        for n in range(1, n ** 2 + 1):
+            matrix[int(x.imag), int(x.real)] = n
 
-        # Determines all the corners that will change the direction that the
-        # spiral travels in
-        rot_nums = {sum(self.addition_seq(j)) for j in range(2, 2 * self.root + 1)}
-        rot_index = 4
+            if n == real:
+                real += round(sqrt(real))
+                imaginary *= -1j
+            x += imaginary
 
-        # Find the mid point of the matrix
-        if self.root % 2 == 0:
-            # If the root is even, the start point will be off centre
-            i = self.mid_index - 1
-            j = self.mid_index
-        else:
-            i = self.mid_index
-            j = self.mid_index
-
-        for n in range(1, self.target + 1):
-            self.matrix[j][i] = n
-
-            if rot_index == 1:
-                j -= 1
-            elif rot_index == 2:
-                i -= 1
-            elif rot_index == 3:
-                j += 1
-            elif rot_index == 4:
-                i += 1
-
-            if n in rot_nums:
-                rot_index += 1
-
-                if rot_index > 4:
-                    rot_index = 1
+        return matrix
 
     def print_spiral(self):
         '''
@@ -84,10 +52,8 @@ class SpirtalPrinter:
         '''
         for row in self.matrix:
             for value in row:
-                # Use int as numpy defaults to float
-                print(str(int(value)) + '\t', end='')
+                print(str(value) + '\t', end='')
             print('\n')
 
 
 printer = SpirtalPrinter()
-printer.print_spiral()
