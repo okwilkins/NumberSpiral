@@ -12,16 +12,39 @@ class SpirtalPrinter:
         '''
         Gets the user input for a target amount of numbers to print.
         '''
-        try:
-            target = int(input('\nPlease enter a target (more than 1): '))
 
-            if target < 1:
-                raise ValueError
-        except ValueError:
-            print('Please enter a valid number!')
-            self.get_target()
-        else:
-            return target
+        user_input = False
+
+        while not user_input:
+            try:
+                target = int(input('\nPlease enter a prime number: '))
+
+                if (target == 2) or not(self.is_prime(target)):
+                    raise ValueError
+            except ValueError:
+                print('Please enter a valid number!')
+            else:
+                break
+
+        return target
+    
+    @staticmethod
+    def is_prime(n):
+        '''
+        CREDIT: https://stackoverflow.com/a/17377939/9592086
+        Checks if number is prime.
+        '''
+        if n == 2:
+            return True
+        if n % 2 == 0 or n <= 1:
+            return False
+
+        sqr = int(sqrt(n)) + 1
+
+        for divisor in range(3, sqr, 2):
+            if n % divisor == 0:
+                return False
+        return True
 
     @staticmethod
     def spiral(n):
