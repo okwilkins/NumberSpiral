@@ -34,14 +34,26 @@ class SpirtalPrinter:
 
     @staticmethod
     def addition_seq(n):
+        '''
+        Generates the sequence of differences between each of a complete square
+        '''
         # Should use iterator here! Look at fibonachi example
         return [math.floor(i / 2) for i in range(2, n + 1)]
 
     def gen_spiral(self):
+        '''
+        Manipulates the matrix so that the number spiral is generated.
+        '''
+    
+
+        # Determines all the corners that will change the direction that the
+        # spiral travels in
         rot_nums = {sum(self.addition_seq(j)) for j in range(2, 2 * self.root + 1)}
         rot_index = 4
 
+        # Find the mid point of the matrix
         if self.root % 2 == 0:
+            # If the root is even, the start point will be off centre
             i = self.mid_index - 1
             j = self.mid_index
         else:
@@ -67,8 +79,12 @@ class SpirtalPrinter:
                     rot_index = 1
 
     def print_spiral(self):
+        '''
+        Nicely prints out the matrix
+        '''
         for row in self.matrix:
             for value in row:
+                # Use int as numpy defaults to float
                 print(str(int(value)) + '\t', end='')
             print('\n')
 
