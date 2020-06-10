@@ -1,12 +1,9 @@
 from math import sqrt
 import numpy as np
+from PIL import Image, ImageDraw
 
-class SpirtalPrinter:
 
-    def __init__(self):
-        self.target = self.get_target()
-        self.matrix = self.prime_spiral(self.target)
-        self.print_spiral()
+class NumberSpiral:
 
     def get_target(self):
         '''
@@ -92,11 +89,11 @@ class SpirtalPrinter:
 
         return matrix
 
-    def print_spiral(self):
+    def print_spiral(self, matrix):
         '''
         Nicely prints out the matrix
         '''
-        for row in self.matrix:
+        for row in matrix:
             for value in row:
                 if value != -1:
                     print(str(value) + '\t', end='')
@@ -105,4 +102,4 @@ class SpirtalPrinter:
             print('\n')
 
 
-printer = SpirtalPrinter()
+spiraliser = NumberSpiral()
