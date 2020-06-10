@@ -5,7 +5,7 @@ class SpirtalPrinter:
 
     def __init__(self):
         self.target = self.get_target()
-        self.matrix = self.spiral(self.target)
+        self.matrix = self.prime_spiral(self.target)
         self.print_spiral()
 
     def get_target(self):
@@ -69,13 +69,39 @@ class SpirtalPrinter:
 
         return matrix
 
+    def prime_spiral(self, n):
+        '''
+        Generate an n x n number spiral with only primes.
+        '''
+        
+        matrix = np.zeros(shape=(n, n), dtype=int)
+        x = (n // 2) * (1j + 1)
+        real = 1
+        imaginary = 1j
+
+        for n in range(1, n ** 2 + 1):
+            if self.is_prime(n):
+                matrix[int(x.imag), int(x.real)] = n
+            else:
+                matrix[int(x.imag), int(x.real)] = -1
+
+            if n == real:
+                real += round(sqrt(real))
+                imaginary *= -1j
+            x += imaginary
+
+        return matrix
+
     def print_spiral(self):
         '''
         Nicely prints out the matrix
         '''
         for row in self.matrix:
             for value in row:
-                print(str(value) + '\t', end='')
+                if value != -1:
+                    print(str(value) + '\t', end='')
+                else:
+                    print(' ' + '\t', end='')
             print('\n')
 
 
