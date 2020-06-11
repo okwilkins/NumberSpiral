@@ -1,5 +1,6 @@
 # Number Spiral Visualiser
-![alt text](https://i.imgur.com/obUPvcI.png)
+![alt text](./graphics/spiral_simple.png)
+![alt text](./graphics/vogal_spiral.png)
 ---
 
 ![alt text](https://preview.redd.it/4euqvhs8g2451.jpg?width=960&crop=smart&auto=webp&s=c6cbc79382ce5275c59a035e34cc5c453031df78)
