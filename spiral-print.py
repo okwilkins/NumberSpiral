@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, sin, cos, pi
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -115,9 +115,30 @@ class NumberSpiralPrinter:
             for i, value in enumerate(row):
                 if value != -1:
                     # -1 signifies that we don't want to draw anything
-                    self.draw.point((i, j), 'black')
-                else:
                     self.draw.point((i, j), 'white')
+                    # point_1 = (i - 1, j - 1)
+                    # point_2 = (i + 1, j + 1)
+                    # self.draw.ellipse([point_1, point_2], fill='white')
+                else:
+                    self.draw.point((i, j), 'black')
+
+    def draw_radial_matrix(self, matrix):
+        centre = self.img_size // 2
+
+        for j, row in enumerate(matrix):
+            for i, value in enumerate(row):
+                theta = sqrt(i)
+                r = sqrt(j)
+
+                x = r * (j // 4) * cos(theta) + centre
+                y = r * (j // 4) * sin(theta) + centre
+
+                if value != -1:
+                    # -1 signifies that we don't want to draw anything
+                    self.draw.point((x, y), 'white')
+
+                else:
+                    self.draw.point((x, y), 'black')
     
     def show_image(self):
         self.img.show()
@@ -129,5 +150,5 @@ spiral_matrix_maker = NumberSpiral()
 matrix = spiral_matrix_maker.prime_spiral(n)
 
 spiraliser = NumberSpiralPrinter(matrix=matrix, n=n)
-spiraliser.draw_matrix(matrix)
+spiraliser.draw_radial_matrix(matrix)
 spiraliser.show_image()
